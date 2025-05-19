@@ -303,27 +303,10 @@ def graph():
         ['Decision Tree', 'Accuracy', accuracy[3]], ['Decision Tree', 'Hamming Loss', loss[3]],
         ['Random Forest', 'Accuracy', accuracy[4]], ['Random Forest', 'Hamming Loss', loss[4]],
         ['KNN', 'Accuracy', accuracy[5]], ['KNN', 'Hamming Loss', loss[5]],
-    ], columns=['Classifier', 'Metric', 'Value'])
+    ], columns=['Parameters', 'Algorithms', 'Value'])
 
-    pivot_df = df.pivot(index="Classifier", columns="Metric", values="Value")
-    pivot_df.plot(kind='bar', figsize=(10, 6), colormap='Set2', edgecolor='black')
-    plt.title("Classifier Accuracy vs Hamming Loss")
-    plt.ylabel("Percentage")
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.legend(title='Metric')
-    plt.show()
-    # Customizing the plot
-    ax.set_title('Algorithm Comparison: Accuracy vs Hamming Loss', fontsize=16)
-    ax.set_xlabel('Parameters', fontsize=14)
-    ax.set_ylabel('Value (%)', fontsize=14)
-    ax.legend(title='Algorithms', bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=12)
-    ax.grid(True, linestyle='--', alpha=0.6)
-
-    plt.tight_layout()  # Adjust the plot to make it fit into the figure area
-    plt.show()
-
-
+    pivot_df = df.pivot(index="Parameters", columns="Algorithms", values="Value")
+    ax = pivot_df.plot(kind='bar', figsize=(10, 6), color=['#1f77b4', '#ff7f0e'], width=0.8)
 
 def predict():
     global classifier1, classifier2, classifier3, classifier4, classifier5, classifier6
