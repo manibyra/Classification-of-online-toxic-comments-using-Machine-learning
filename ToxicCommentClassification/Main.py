@@ -303,11 +303,16 @@ def graph():
         ['Decision Tree', 'Accuracy', accuracy[3]], ['Decision Tree', 'Hamming Loss', loss[3]],
         ['Random Forest', 'Accuracy', accuracy[4]], ['Random Forest', 'Hamming Loss', loss[4]],
         ['KNN', 'Accuracy', accuracy[5]], ['KNN', 'Hamming Loss', loss[5]],
-    ], columns=['Parameters', 'Algorithms', 'Value'])
+    ], columns=['Classifier', 'Metric', 'Value'])
 
-    pivot_df = df.pivot(index="Parameters", columns="Algorithms", values="Value")
-    ax = pivot_df.plot(kind='bar', figsize=(10, 6), color=['#1f77b4', '#ff7f0e'], width=0.8)
-
+    pivot_df = df.pivot(index="Classifier", columns="Metric", values="Value")
+    pivot_df.plot(kind='bar', figsize=(10, 6), colormap='Set2', edgecolor='black')
+    plt.title("Classifier Accuracy vs Hamming Loss")
+    plt.ylabel("Percentage")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.legend(title='Metric')
+    plt.show()
     # Customizing the plot
     ax.set_title('Algorithm Comparison: Accuracy vs Hamming Loss', fontsize=16)
     ax.set_xlabel('Parameters', fontsize=14)
