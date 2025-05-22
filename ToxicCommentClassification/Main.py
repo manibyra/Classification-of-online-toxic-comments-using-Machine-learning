@@ -294,7 +294,6 @@ def runKNN():
     text.insert(END,"KNN Accuracy : "+str(acc)+"\n")
     text.insert(END,"KNN Hamming Loss : "+str(lossValue)+"\n\n")
     
-
 def graph():
     df = pd.DataFrame([
         ['SVM', 'Accuracy', accuracy[0]], ['SVM', 'Hamming Loss', loss[0]],
@@ -303,10 +302,20 @@ def graph():
         ['Decision Tree', 'Accuracy', accuracy[3]], ['Decision Tree', 'Hamming Loss', loss[3]],
         ['Random Forest', 'Accuracy', accuracy[4]], ['Random Forest', 'Hamming Loss', loss[4]],
         ['KNN', 'Accuracy', accuracy[5]], ['KNN', 'Hamming Loss', loss[5]],
-    ], columns=['Parameters', 'Algorithms', 'Value'])
+    ], columns=['Algorithm', 'Metric', 'Value'])
 
-    pivot_df = df.pivot(index="Parameters", columns="Algorithms", values="Value")
-    ax = pivot_df.plot(kind='bar', figsize=(10, 6), color=['#1f77b4', '#ff7f0e'], width=0.8)
+    fig, ax = plt.subplots()
+    for metric in ['Accuracy', 'Hamming Loss']:
+        data = df[df['Metric'] == metric]
+        ax.plot(data['Algorithm'], data['Value'], marker='o', label=metric)
+
+    ax.set_xlabel('Algorithm')
+    ax.set_ylabel('Value')
+    ax.set_title('Accuracy & Hamming Loss Comparison')
+    ax.legend()
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
 
 def predict():
     global classifier1, classifier2, classifier3, classifier4, classifier5, classifier6
